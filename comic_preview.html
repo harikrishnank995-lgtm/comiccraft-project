@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %}Your Comic · ComicCraft{% endblock %}
+{% block content %}
+<section class="result-heading">
+  <span class="eyebrow">YOUR STORY IS READY</span>
+  <h1>{{ title }}</h1>
+  <p>Five moments. One adventure. Read through your comic, then save it as a PDF.</p>
+</section>
+<div class="comic-grid">
+{% for panel in layout %}
+  <article class="panel-card">
+    <div class="panel-top"><span>0{{ panel.panel_number }}</span><h2>{{ panel.title }}</h2></div>
+    {% if panel.image_url %}<img class="panel-image" src="{{ panel.image_url }}" alt="Illustration for {{ panel.title }}">{% else %}<div class="no-image">Illustration skipped</div>{% endif %}
+    <div class="panel-copy">
+      <p class="scene">{{ panel.scene_description }}</p>
+      {% if panel.caption %}<p><span class="copy-label">CAPTION</span>{{ panel.caption }}</p>{% endif %}
+      {% if panel.narration %}<p><span class="copy-label">NARRATION</span>{{ panel.narration }}</p>{% endif %}
+      {% if panel.dialogue %}<blockquote>{{ panel.dialogue }}</blockquote>{% endif %}
+    </div>
+  </article>
+{% endfor %}
+</div>
+<div class="action-row">
+  <a class="primary link-button" href="{{ pdf_url }}" download>⬇ Download your comic PDF</a>
+  <a class="secondary link-button" href="/export-success?pdf_url={{ pdf_url | urlencode }}">Continue</a>
+  <a class="secondary link-button" href="/">Create another</a>
+</div>
+{% endblock %}

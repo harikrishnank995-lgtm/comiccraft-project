@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block title %}Create a Comic · ComicCraft{% endblock %}
+{% block content %}
+<section class="hero">
+  <div class="hero-copy">
+    <span class="eyebrow">AI STORY STUDIO</span>
+    <h1>Turn your idea into a <span>comic adventure.</span></h1>
+    <p>Write a tiny idea. Get a five-panel story with narration, dialogue, illustrations, and a PDF you can keep.</p>
+    {% if demo_mode %}<div class="notice">Demo mode is enabled. The app works without API keys using sample story content and placeholder artwork.</div>{% endif %}
+  </div>
+  <form class="form-card" action="/generate" method="post">
+    <h2>Build your comic</h2>
+    {% if error %}<div class="error"><strong>Could not generate the comic:</strong> {{ error }}</div>{% endif %}
+    <label for="prompt">Story idea</label>
+    <textarea id="prompt" name="prompt" minlength="5" maxlength="1000" required placeholder="A brave fox discovers a secret door in an enchanted forest...">{{ form.prompt if form else "" }}</textarea>
+    <div class="two-col">
+      <div><label for="character_name">Main character</label><input id="character_name" name="character_name" maxlength="60" value="{{ form.character_name if form else 'Alex' }}" required></div>
+      <div><label for="setting">Setting</label><input id="setting" name="setting" maxlength="120" value="{{ form.setting if form else 'enchanted forest' }}" required></div>
+    </div>
+    <div class="two-col">
+      <div><label for="tone">Story tone</label><select id="tone" name="tone"><option>adventurous</option><option>funny</option><option>dramatic</option><option>poetic</option><option>mysterious</option></select></div>
+      <div><label for="art_style">Art style</label><select id="art_style" name="art_style"><option>comic book</option><option>anime</option><option>pixel art</option><option>watercolor</option><option>realistic</option></select></div>
+    </div>
+    <label class="check-row"><input type="checkbox" name="generate_images" value="yes" checked> Generate illustrations (demo artwork is used when image API is not configured)</label>
+    <button class="primary" type="submit">✨ Generate my comic</button>
+    <p class="fine-print">Generation may take a little while when cloud AI services are enabled.</p>
+  </form>
+</section>
+<section class="feature-row">
+  <div><b>01</b><span><strong>Write</strong><small>Describe your idea</small></span></div>
+  <div><b>02</b><span><strong>Imagine</strong><small>Build five panels</small></span></div>
+  <div><b>03</b><span><strong>Export</strong><small>Save as a PDF</small></span></div>
+</section>
+{% endblock %}
